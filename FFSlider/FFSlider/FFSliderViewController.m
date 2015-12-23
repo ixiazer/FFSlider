@@ -13,19 +13,18 @@
 
 @interface FFSliderViewController () <UIScrollViewDelegate>
 // sliderView容器
-@property (nonatomic, strong) UIScrollView *sliderScrollView;
-@property (nonatomic, strong) NSMutableArray *scrollviewSliderInfoArr;
-@property (nonatomic, strong) FFSliderSingleViewController *currentSingleVC;
+@property (nonatomic, strong) UIScrollView *sliderScrollView; // UIScrollView容器
+@property (nonatomic, strong) NSMutableArray *scrollviewSliderInfoArr; // UIScrollView容器中视图的数据对象
+@property (nonatomic, strong) FFSliderSingleViewController *currentSingleVC; // 当前UIViewController
 // 缓存池数据
-@property (nonatomic, strong) NSCache *sliderCache;
-@property (nonatomic, assign) FFSliderCachePolicy cachePolicy;
-@property (nonatomic, strong) NSMutableArray *sliderCachePools;
+@property (nonatomic, strong) NSCache *sliderCache; // 缓存池
+@property (nonatomic, assign) FFSliderCachePolicy cachePolicy; // 缓存策略
 
 // sliderView 相关数据
-@property (nonatomic, strong) NSArray *sliderInfoArr;
+@property (nonatomic, strong) NSArray *sliderInfoArr; // 所有导航数据，只显示其中3条数据
 
 // 回掉block
-@property (nonatomic, copy) void(^sliderBlock)(id vcData, NSInteger currentIndex);
+@property (nonatomic, copy) void(^sliderBlock)(id vcData, NSInteger currentIndex); // 当UIScrollView滚动后，通知父视图
 @end
 
 @implementation FFSliderViewController
@@ -39,7 +38,6 @@
 - (void)initData {
     self.cachePolicy = FFSliderCachePolicyNoLimit;
     self.sliderCache = [[NSCache alloc] init];
-    self.sliderCachePools = [[NSMutableArray alloc] init];
     self.scrollviewSliderInfoArr = [[NSMutableArray alloc] init];
 }
 
