@@ -9,6 +9,7 @@
 #import "FFMainViewController.h"
 #import "FFSliderModel.h"
 #import "FFSliderViewController.h"
+#import "FFSliderSingleViewController.h"
 
 @interface FFMainViewController ()
 @property (nonatomic, strong) NSMutableArray *sliderInfoArr;
@@ -36,7 +37,7 @@
 
 - (void)initData {
     self.sliderInfoArr = [NSMutableArray new];
-    for (NSInteger i = 0; i < 6; i++) {
+    for (NSInteger i = 0; i < 1; i++) {
         FFSliderModel *model = [[FFSliderModel alloc] init];
         model.sliderTitle = [NSString stringWithFormat:@"title+%ld",(long)i];
         model.sliderIndex = i;
@@ -79,8 +80,8 @@
     [self.view addSubview:self.sliderVC.view];
     
     __weak typeof(self) this = self;
-    [self.sliderVC configSliderView:self.sliderInfoArr currentIndex:0 sliderBlock:^(id vcData, NSInteger currentIndex) {
-        [this sliderHandle:vcData currentIndex:currentIndex];
+    [self.sliderVC configSliderView:self.sliderInfoArr currentIndex:0 vcClassName:@"FFSliderSingleViewController" sliderBlock:^(id vcData, NSInteger currentIndex) {
+        [this sliderHandle:vcData cvClassName:@"FFSliderSingleViewController" currentIndex:currentIndex];
     }];
 }
 
@@ -89,12 +90,40 @@
     NSInteger tag = btn.tag;
     
     __weak typeof(self) this = self;
-    [self.sliderVC configSliderView:self.sliderInfoArr currentIndex:tag sliderBlock:^(id vcData, NSInteger currentIndex) {
-        [this sliderHandle:vcData currentIndex:currentIndex];
+    [self.sliderVC configSliderView:self.sliderInfoArr currentIndex:tag vcClassName:@"FFSliderSingleViewController" sliderBlock:^(id vcData, NSInteger currentIndex) {
+        [this sliderHandle:vcData cvClassName:@"FFSliderSingleViewController" currentIndex:currentIndex];
     }];
 }
 
-- (void)sliderHandle:(id)vcData currentIndex:(NSInteger)currentIndex {
+- (void)sliderHandle:(id)vcData cvClassName:(NSString *)cvClassName currentIndex:(NSInteger)currentIndex {
+    if ([cvClassName isEqualToString:@"FFSliderSingleViewController"]) {
+        FFSliderSingleViewController *singleVC = (FFSliderSingleViewController *)vcData;
+        
+        singleVC.index = currentIndex;
+
+        if (singleVC.index == 0) {
+            singleVC.view.backgroundColor = [UIColor redColor];
+        } else if (singleVC.index == 1) {
+            singleVC.view.backgroundColor = [UIColor orangeColor];
+        } else if (singleVC.index == 2) {
+            singleVC.view.backgroundColor = [UIColor yellowColor];
+        } else if (singleVC.index == 3) {
+            singleVC.view.backgroundColor = [UIColor greenColor];
+        } else if (singleVC.index == 4) {
+            singleVC.view.backgroundColor = [UIColor blueColor];
+        } else if (singleVC.index == 5) {
+            singleVC.view.backgroundColor = [UIColor grayColor];
+        } else if (singleVC.index == 6) {
+            singleVC.view.backgroundColor = [UIColor darkGrayColor];
+        } else if (singleVC.index == 7) {
+            singleVC.view.backgroundColor = [UIColor purpleColor];
+        } else if (singleVC.index == 8) {
+            singleVC.view.backgroundColor = [UIColor lightGrayColor];
+        } else if (singleVC.index == 9) {
+            singleVC.view.backgroundColor = [UIColor brownColor];
+        }
+        
+    }
     NSLog(@"currentVCInfo---->>%@/%ld",vcData,(long)currentIndex);
 }
 

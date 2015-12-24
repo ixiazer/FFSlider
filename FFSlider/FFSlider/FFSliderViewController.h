@@ -21,11 +21,10 @@ typedef NS_ENUM(NSInteger, FFSliderUIInitType) {
     FFSliderUIInitTypeForBackward = 1 << 2, // 向后滑动
 };
 
-
-
 @interface FFSliderViewController : UIViewController
 @property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) FFSliderCachePolicy cachePolicy; // 缓存策略
 
-- (void)configSliderView:(NSArray *)sliderInfoArr currentIndex:(NSInteger)currentIndex sliderBlock:(void(^)(id vcData, NSInteger currentIndex))sliderBlock;
+- (void)configSliderView:(NSArray *)sliderInfoArr currentIndex:(NSInteger)currentIndex vcClassName:(NSString *)vcClassName sliderBlock:(void(^)(id vcData, NSInteger currentIndex))sliderBlock;
 
 @end

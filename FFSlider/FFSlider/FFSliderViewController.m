@@ -7,7 +7,6 @@
 //
 
 #import "FFSliderViewController.h"
-#import "FFSliderSingleViewController.h"
 #import "FFSliderModel.h"
 #import "UIView+FF.h"
 
@@ -15,16 +14,20 @@
 // sliderView容器
 @property (nonatomic, strong) UIScrollView *sliderScrollView; // UIScrollView容器
 @property (nonatomic, strong) NSMutableArray *scrollviewSliderInfoArr; // UIScrollView容器中视图的数据对象
-@property (nonatomic, strong) FFSliderSingleViewController *currentSingleVC; // 当前UIViewController
+@property (nonatomic, strong) UIViewController *currentSingleVC; // 当前UIViewController
+@property (nonatomic, strong) FFSliderModel *currentSliderModel; // 当前UIViewController model
 // 缓存池数据
 @property (nonatomic, strong) NSCache *sliderCache; // 缓存池
-@property (nonatomic, assign) FFSliderCachePolicy cachePolicy; // 缓存策略
+// 收到内存警告的次数
+@property (nonatomic, assign) NSInteger memoryWarningCount;
 
 // sliderView 相关数据
 @property (nonatomic, strong) NSArray *sliderInfoArr; // 所有导航数据，只显示其中3条数据
 
 // 回掉block
 @property (nonatomic, copy) void(^sliderBlock)(id vcData, NSInteger currentIndex); // 当UIScrollView滚动后，通知父视图
+// 滚动viewcontroller class name
+@property (nonatomic, strong) NSString *vcClassName;
 @end
 
 @implementation FFSliderViewController
@@ -36,13 +39,15 @@
 }
 
 - (void)initData {
+    self.memoryWarningCount = 0;
     self.cachePolicy = FFSliderCachePolicyNoLimit;
     self.sliderCache = [[NSCache alloc] init];
     self.scrollviewSliderInfoArr = [[NSMutableArray alloc] init];
 }
 
-- (void)configSliderView:(NSArray *)sliderInfoArr currentIndex:(NSInteger)currentIndex sliderBlock:(void(^)(id vcData, NSInteger currentIndex))sliderBlock {
+- (void)configSliderView:(NSArray *)sliderInfoArr currentIndex:(NSInteger)currentIndex vcClassName:(NSString *)vcClassName sliderBlock:(void(^)(id vcData, NSInteger currentIndex))sliderBlock {
     self.sliderBlock = sliderBlock;
+    self.vcClassName = vcClassName;
     
     [self.sliderScrollView removeFromSuperview];
     self.sliderScrollView = nil;
@@ -55,51 +60,36 @@
 }
 
 - (void)initUI {
-    if (self.sliderInfoArr.count == 0) {
-        return;
-    } else {
+    if (self.sliderInfoArr.count > 0) {
         [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
     }
     
     [self.view addSubview:self.sliderScrollView];
 }
 
-- (FFSliderSingleViewController *)getSingleVC:(NSInteger)index {
+- (id)getSingleVC:(NSInteger)index {
     FFSliderModel *model = (FFSliderModel *)[self.sliderInfoArr objectAtIndex:index];
     
-    FFSliderSingleViewController *singleVC;
-    FFSliderSingleViewController *tempVC = [self.sliderCache objectForKey:@(model.sliderIndex)];
+    id singleVC;
+    id tempVC = [self.sliderCache objectForKey:@(model.sliderIndex)];
     if (tempVC) {
         singleVC = tempVC;
     } else {
-        singleVC = [[FFSliderSingleViewController alloc] init];
+        Class someClass = NSClassFromString(self.vcClassName);
+        singleVC = [[someClass alloc] init];
         [self.sliderCache setObject:singleVC forKey:@(model.sliderIndex)];
-    }
-    singleVC.index = model.sliderIndex;
-    
-    if (index == 0) {
-        singleVC.view.backgroundColor = [UIColor redColor];
-    } else if (index == 1) {
-        singleVC.view.backgroundColor = [UIColor orangeColor];
-    } else if (index == 2) {
-        singleVC.view.backgroundColor = [UIColor yellowColor];
-    } else if (index == 3) {
-        singleVC.view.backgroundColor = [UIColor greenColor];
-    } else if (index == 4) {
-        singleVC.view.backgroundColor = [UIColor blueColor];
-    } else if (index == 5) {
-        singleVC.view.backgroundColor = [UIColor grayColor];
-    } else if (index == 6) {
-        singleVC.view.backgroundColor = [UIColor darkGrayColor];
-    } else if (index == 7) {
-        singleVC.view.backgroundColor = [UIColor purpleColor];
-    } else if (index == 8) {
-        singleVC.view.backgroundColor = [UIColor lightGrayColor];
-    } else if (index == 9) {
-        singleVC.view.backgroundColor = [UIColor brownColor];
     }
     
     return singleVC;
+}
+
+- (void)growCachePolicyAfterMemoryWarning {
+    self.cachePolicy = FFSliderCachePolicyBalanced;
+    [self performSelector:@selector(growCachePolicyToHigh) withObject:nil afterDelay:2.0 inModes:@[NSRunLoopCommonModes]];
+}
+
+- (void)growCachePolicyToHigh {
+    self.cachePolicy = FFSliderCachePolicyHighMemory;
 }
 
 #pragma mark - 绘制UIScrollView 的子视图
@@ -113,7 +103,7 @@
     if (type == FFSliderUIInitTypeForForward) {
         // 移除不显示视图
         FFSliderModel *model = (FFSliderModel *)[self.scrollviewSliderInfoArr lastObject];
-        FFSliderSingleViewController *singleVC = (FFSliderSingleViewController *)[self getSingleVC:model.sliderIndex];
+        UIViewController *singleVC = (UIViewController *)[self getSingleVC:model.sliderIndex];
         [singleVC.view removeFromSuperview];
         [singleVC removeFromParentViewController];
         
@@ -139,7 +129,7 @@
         scrollViewCurrentIndex = 1;
     } else if (type == FFSliderUIInitTypeForBackward) {
         FFSliderModel *model = (FFSliderModel *)[self.scrollviewSliderInfoArr firstObject];
-        FFSliderSingleViewController *singleVC = (FFSliderSingleViewController *)[self getSingleVC:model.sliderIndex];
+        UIViewController *singleVC = (UIViewController *)[self getSingleVC:model.sliderIndex];
         [singleVC.view removeFromSuperview];
         [singleVC removeFromParentViewController];
         
@@ -162,6 +152,7 @@
         // 当前视图在所有数组中定位
         scrollViewCurrentIndex = 1;
     } else {
+        self.currentSingleVC = nil;
         if (self.sliderInfoArr.count <= 3) {
             self.scrollviewSliderInfoArr = [[NSMutableArray alloc] initWithArray:self.sliderInfoArr];
             scrollViewCurrentIndex = self.currentIndex;
@@ -189,7 +180,7 @@
 - (void)drawSliderView:(NSInteger)scrollViewCurrentIndex {
     for (NSInteger i = 0; i < self.scrollviewSliderInfoArr.count; i++) {
         FFSliderModel *model = (FFSliderModel *)self.scrollviewSliderInfoArr[i];
-        FFSliderSingleViewController *singleVC = (FFSliderSingleViewController *)[self getSingleVC:model.sliderIndex];
+        UIViewController *singleVC = (UIViewController *)[self getSingleVC:model.sliderIndex];
         singleVC.view.frame = CGRectMake(self.view.bounds.size.width*i, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         
         [self.sliderScrollView addSubview:singleVC.view];
@@ -198,12 +189,13 @@
         
         if (i == scrollViewCurrentIndex) {
             self.currentSingleVC = singleVC;
+            self.currentSliderModel = model;
         }
     }
     
     [self.sliderScrollView setContentOffset:CGPointMake(self.view.bounds.size.width*scrollViewCurrentIndex, 0)];
     
-    self.currentIndex = self.currentSingleVC.index;
+    self.currentIndex = self.currentSliderModel.sliderIndex;
     
     //    NSLog(@"self.currentIndex--->>%ld",(long)self.currentIndex);
 }
@@ -217,8 +209,30 @@
     }
 }
 
+- (void)setCachePolicy:(FFSliderCachePolicy)cachePolicy {
+    _cachePolicy = cachePolicy;
+    self.sliderCache.countLimit = _cachePolicy;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+    NSLog(@"didReceiveMemoryWarning---->>");
+    
+    self.memoryWarningCount++;
+    self.cachePolicy = FFSliderCachePolicyLowMemory;
+    
+    // 取消正在增长的 cache 操作
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(growCachePolicyAfterMemoryWarning) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(growCachePolicyToHigh) object:nil];
+    
+    [self.sliderCache removeAllObjects];
+    self.currentSingleVC = nil;
+    
+    // 如果收到内存警告次数小于 3，一段时间后切换到模式 Balanced
+    if (self.memoryWarningCount < 3) {
+        [self performSelector:@selector(growCachePolicyAfterMemoryWarning) withObject:nil afterDelay:3.0 inModes:@[NSRunLoopCommonModes]];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -232,11 +246,13 @@
 //    NSLog(@"offsetX--->>%ld/%f",(long)scrollViewIndex,offsetX);
 
     if (self.sliderInfoArr.count <= 3) {
+        self.currentSingleVC = nil;
         self.currentIndex = scrollViewIndex;
         [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
     } else {
         if (self.currentIndex == 0 || (self.currentIndex == 1 && scrollViewIndex == 0)) {
             // 前3页
+            self.currentSingleVC = nil;
             self.currentIndex = scrollViewIndex;
             [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
         } else if (self.currentIndex == self.sliderInfoArr.count-2 && scrollViewIndex == 2) {
@@ -244,7 +260,8 @@
             self.currentIndex += 1;
             [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
         } else if (self.currentIndex == self.sliderInfoArr.count-1 && scrollViewIndex == 2) {
-            self.currentIndex = self.currentSingleVC.index;
+            self.currentSingleVC = nil;
+            self.currentIndex = self.currentSliderModel.sliderIndex;
             [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
         } else {
             if (scrollViewIndex == 0) {
