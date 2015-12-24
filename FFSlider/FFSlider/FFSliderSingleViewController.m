@@ -21,8 +21,13 @@
 
 - (void)setIndex:(NSInteger)index {
     _index = index;
-    self.lab.text = [NSString stringWithFormat:@"%ld",index];
+    self.lab.text = [NSString stringWithFormat:@"%ld",(long)index];
     [self.view addSubview:self.lab];
+    
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 500)];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.163.com"]];
+    [webView loadRequest:request];
+    [self.view addSubview:webView];
 }
 
 - (void)didReceiveMemoryWarning {

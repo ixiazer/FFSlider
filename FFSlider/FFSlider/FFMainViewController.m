@@ -37,7 +37,7 @@
 
 - (void)initData {
     self.sliderInfoArr = [NSMutableArray new];
-    for (NSInteger i = 0; i < 1; i++) {
+    for (NSInteger i = 0; i < 1000; i++) {
         FFSliderModel *model = [[FFSliderModel alloc] init];
         model.sliderTitle = [NSString stringWithFormat:@"title+%ld",(long)i];
         model.sliderIndex = i;
