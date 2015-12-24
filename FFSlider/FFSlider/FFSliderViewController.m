@@ -257,6 +257,7 @@
             [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
         } else if (self.currentIndex == self.sliderInfoArr.count-2 && scrollViewIndex == 2) {
             // 倒数第2页,且朝后翻
+            self.currentSingleVC = nil;
             self.currentIndex += 1;
             [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
         } else if (self.currentIndex == self.sliderInfoArr.count-1 && scrollViewIndex == 2) {
@@ -270,6 +271,7 @@
                 [self resetScrollViewCon:FFSliderUIInitTypeForBackward];
             } else {
                 if (self.currentIndex == self.sliderInfoArr.count - 1 && scrollViewIndex == 1) {
+                    self.currentSingleVC = nil;
                     self.currentIndex -= 1;
                     [self resetScrollViewCon:FFSliderUIInitTypeForNormal];
                 }
