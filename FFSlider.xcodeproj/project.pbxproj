@@ -14,11 +14,11 @@
 		176460511C291E3100BFB59D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1764604F1C291E3100BFB59D /* LaunchScreen.storyboard */; };
 		1764605C1C291E3100BFB59D /* FFSliderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1764605B1C291E3100BFB59D /* FFSliderTests.m */; };
 		176460671C291E3100BFB59D /* FFSliderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 176460661C291E3100BFB59D /* FFSliderUITests.m */; };
-		1764607A1C291F3B00BFB59D /* FFMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 176460791C291F3B00BFB59D /* FFMainViewController.m */; };
 		1764607D1C2920A800BFB59D /* FFSliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1764607C1C2920A800BFB59D /* FFSliderViewController.m */; };
-		176460811C29210F00BFB59D /* FFSliderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 176460801C29210F00BFB59D /* FFSliderModel.m */; };
-		176460841C2922B900BFB59D /* FFSliderSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 176460831C2922B900BFB59D /* FFSliderSingleViewController.m */; };
 		17C3D9F81C2A3C490071A8D6 /* UIView+FF.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C3D9F71C2A3C490071A8D6 /* UIView+FF.m */; };
+		17C3D9FB1C2B8D5E0071A8D6 /* FFSliderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C3D9FA1C2B8D5E0071A8D6 /* FFSliderModel.m */; };
+		17C3DA001C2B8D670071A8D6 /* FFMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C3D9FD1C2B8D670071A8D6 /* FFMainViewController.m */; };
+		17C3DA011C2B8D670071A8D6 /* FFSliderSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17C3D9FF1C2B8D670071A8D6 /* FFSliderSingleViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,16 +53,16 @@
 		176460621C291E3100BFB59D /* FFSliderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FFSliderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		176460661C291E3100BFB59D /* FFSliderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFSliderUITests.m; sourceTree = "<group>"; };
 		176460681C291E3100BFB59D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		176460781C291F3B00BFB59D /* FFMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFMainViewController.h; path = FFSlider/FFMainViewController.h; sourceTree = "<group>"; };
-		176460791C291F3B00BFB59D /* FFMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFMainViewController.m; path = FFSlider/FFMainViewController.m; sourceTree = "<group>"; };
 		1764607B1C2920A800BFB59D /* FFSliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFSliderViewController.h; path = FFSlider/FFSliderViewController.h; sourceTree = "<group>"; };
 		1764607C1C2920A800BFB59D /* FFSliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFSliderViewController.m; path = FFSlider/FFSliderViewController.m; sourceTree = "<group>"; };
-		1764607F1C29210F00BFB59D /* FFSliderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFSliderModel.h; sourceTree = "<group>"; };
-		176460801C29210F00BFB59D /* FFSliderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFSliderModel.m; sourceTree = "<group>"; };
-		176460821C2922B900BFB59D /* FFSliderSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFSliderSingleViewController.h; path = FFSlider/FFSliderSingleViewController.h; sourceTree = "<group>"; };
-		176460831C2922B900BFB59D /* FFSliderSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFSliderSingleViewController.m; path = FFSlider/FFSliderSingleViewController.m; sourceTree = "<group>"; };
 		17C3D9F61C2A3C490071A8D6 /* UIView+FF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FF.h"; sourceTree = "<group>"; };
 		17C3D9F71C2A3C490071A8D6 /* UIView+FF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FF.m"; sourceTree = "<group>"; };
+		17C3D9F91C2B8D5E0071A8D6 /* FFSliderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFSliderModel.h; path = FFSlider/Model/FFSliderModel.h; sourceTree = "<group>"; };
+		17C3D9FA1C2B8D5E0071A8D6 /* FFSliderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFSliderModel.m; path = FFSlider/Model/FFSliderModel.m; sourceTree = "<group>"; };
+		17C3D9FC1C2B8D670071A8D6 /* FFMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFMainViewController.h; sourceTree = "<group>"; };
+		17C3D9FD1C2B8D670071A8D6 /* FFMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFMainViewController.m; sourceTree = "<group>"; };
+		17C3D9FE1C2B8D670071A8D6 /* FFSliderSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFSliderSingleViewController.h; sourceTree = "<group>"; };
+		17C3D9FF1C2B8D670071A8D6 /* FFSliderSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFSliderSingleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +118,10 @@
 				176460451C291E3100BFB59D /* AppDelegate.m */,
 				17C3D9F61C2A3C490071A8D6 /* UIView+FF.h */,
 				17C3D9F71C2A3C490071A8D6 /* UIView+FF.m */,
+				17C3D9FC1C2B8D670071A8D6 /* FFMainViewController.h */,
+				17C3D9FD1C2B8D670071A8D6 /* FFMainViewController.m */,
+				17C3D9FE1C2B8D670071A8D6 /* FFSliderSingleViewController.h */,
+				17C3D9FF1C2B8D670071A8D6 /* FFSliderSingleViewController.m */,
 				1764604A1C291E3100BFB59D /* Main.storyboard */,
 				1764604D1C291E3100BFB59D /* Assets.xcassets */,
 				1764604F1C291E3100BFB59D /* LaunchScreen.storyboard */,
@@ -157,12 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				1764607E1C2920FA00BFB59D /* Model */,
-				176460781C291F3B00BFB59D /* FFMainViewController.h */,
-				176460791C291F3B00BFB59D /* FFMainViewController.m */,
 				1764607B1C2920A800BFB59D /* FFSliderViewController.h */,
 				1764607C1C2920A800BFB59D /* FFSliderViewController.m */,
-				176460821C2922B900BFB59D /* FFSliderSingleViewController.h */,
-				176460831C2922B900BFB59D /* FFSliderSingleViewController.m */,
 			);
 			name = FFSlider;
 			sourceTree = "<group>";
@@ -170,8 +170,8 @@
 		1764607E1C2920FA00BFB59D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1764607F1C29210F00BFB59D /* FFSliderModel.h */,
-				176460801C29210F00BFB59D /* FFSliderModel.m */,
+				17C3D9F91C2B8D5E0071A8D6 /* FFSliderModel.h */,
+				17C3D9FA1C2B8D5E0071A8D6 /* FFSliderModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -306,12 +306,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				176460811C29210F00BFB59D /* FFSliderModel.m in Sources */,
+				17C3D9FB1C2B8D5E0071A8D6 /* FFSliderModel.m in Sources */,
+				17C3DA001C2B8D670071A8D6 /* FFMainViewController.m in Sources */,
+				17C3DA011C2B8D670071A8D6 /* FFSliderSingleViewController.m in Sources */,
 				17C3D9F81C2A3C490071A8D6 /* UIView+FF.m in Sources */,
 				176460461C291E3100BFB59D /* AppDelegate.m in Sources */,
 				1764607D1C2920A800BFB59D /* FFSliderViewController.m in Sources */,
-				176460841C2922B900BFB59D /* FFSliderSingleViewController.m in Sources */,
-				1764607A1C291F3B00BFB59D /* FFMainViewController.m in Sources */,
 				176460431C291E3100BFB59D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
